@@ -23,15 +23,6 @@ app.use(serveStatic(path.join(__dirname, '..', 'build'), {'index': false}))
 app.use(bodyParser.json())
 
 app.post('/', function (request, response) {
-  // var body = ''
-
-  // request.on('data', function (chunk) {
-  //   body += chunk
-  // })
-
-  // request.on('end', function () {
-  //   if (!body) return
-  //   var message = JSON.parse(body)
   var message = request.body
   console.log('Got a message: ' + message.type)
   var sub = message.subscription
@@ -43,18 +34,12 @@ app.post('/', function (request, response) {
     subscribers.push(sub)
     setTimeout(notifyAll, 10000)
   } else if (message.type === 'unsubscribe') {
-    var index = subscribers.findIndex((x) => x.keys.p256dh === sub.keys.p256dh)
+    var index = subscribers.findIndex(function (x) { return x.keys.p256dh === sub.keys.p256dh })
     if (index < 0) return console.error('Cannot unsubscribe, cannot find ' + sub.guid)
     subscribers = subscribers.splice(index, 1)
   } else {
     console.error('dropping unknown message type ' + message.type)
   }
-  // })
-
-  // response.writeHead(200, {
-  //   'Content-Type': 'application/json',
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, Access-Control-Allow-Headers'})
   response.end()
 })
 

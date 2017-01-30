@@ -22,7 +22,7 @@ self.addEventListener('notificationclick', function (event) {
   var link
   if (event.action) {
     var actions = latestNotification.actions
-    var action = actions.find((x) => x.action === event.action)
+    var action = actions.find(function (x) { x.action === event.action })
     link = action.link
   } else {
     link = latestNotification.link
