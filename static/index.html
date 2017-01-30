@@ -13,11 +13,25 @@
       <br>
     </h1>
 
-    <div id='error'></div>
+    <div id='error'>
+      <div id='error-unsupported-browser'>
+        sorry, your browser doesn't support push notifications.
+        consider getting the latest <a href='https://www.google.com/chrome/browser'>Chrome</a>
+        or <a href='https://www.mozilla.org/en-US/firefox/products/'>Firefox</a>.
+      </div>
+      <div id='error-notifications-denied'>
+        for batsignal to work, please enable notifications. click on the green lock in the
+        address bar, then set notifications to Allow.
+      </div>
+    </div>
 
     <p>
       <strong>service worker: </strong>
       <span id='service-worker-status'></span>
+    </p>
+
+    <p>
+      <strong>push notifications: <button id='toggle-subscribe'></button></strong>
     </p>
 
     <p><strong>summon your heros. save the city.</strong></p>

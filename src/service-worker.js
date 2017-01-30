@@ -1,4 +1,5 @@
 /* global self */
+console.log('Service worker starting')
 
 var port
 
@@ -8,6 +9,7 @@ self.onmessage = function (e) {
 }
 
 self.addEventListener('push', function (event) {
+  console.log('DBG GOT PUSH', event)
   var obj = event.data.json()
 
   if (obj.action === 'subscribe' || obj.action === 'unsubscribe') {
