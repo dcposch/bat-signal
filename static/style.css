@@ -1,0 +1,11 @@
+body {
+  font-family: sans-serif;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#error {
+ font-weight: bold;
+ color: #a00;
+}
