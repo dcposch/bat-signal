@@ -6,19 +6,30 @@ bat signal is a tool for political organizations to send push notifications to s
 
 use this to pack meetings, blow up politicians' phone lines, comment on a fresh news article, or call in to a radio show. use it to remind people on the morning of a protest. use it only for good.
 
-## the rules
+## quick start
 
-* **apply sparingly**. nobody likes spam.
-* **keep it actionable**. tell me where to be and when. if there's going to be public commentary, summarize the issue and give me talking points. if i'm calling a legislator, a rep, a senator, a radio show: same thing.
-* **keep it immediate**. when my push notification shows up, it should ideally be something i can do right now. at worst, it should be something i can do later today.
+```
+npm install
+node ./scripts/generate-keys
+npm run watch
+```
 
-## how it works
+then, in another tab:
 
-1. link your supporters to your-org.batsign.al
-2. they sign up for notifications
-3. when things are about to go down, activate your signal. even if they are neither on your website nor ours, they'll be notified! browsers support [push notifications](https://developer.mozilla.org/en-US/docs/Web/API/Push_API) nowadays.
+```
+npm start
+```
 
-## sign up
+## deployment
 
-1. email `boss` at `batsign.al`. tell us who you are. tell us whether you're a 501c3, 501c4, or other type of political organization. tell us, if you had these powers already, the most recent thing you would've used them for.
-2. we'll be in touch
+```
+npm run build
+```
+
+deploy the whole folder excluding `.git` and `node_modules` to a server, then run
+
+```
+node src/server.js
+```
+
+you'll need your own SSL reverse proxy.

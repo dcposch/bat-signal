@@ -7,8 +7,10 @@
   "license": "ISC",
   "repository": "https://github.com/dcposch/bat-signal",
   "dependencies": {
+    "brfs": "^1.4.3",
     "express": "^4.14.1",
     "serve-static": "^1.11.2",
+    "urlsafe-base64": "^1.0.0",
     "web-push": "^3.2.1"
   },
   "devDependencies": {
@@ -21,8 +23,8 @@
     "postinstall": "npm run build",
     "start": "node src/server.js",
     "build": "rm -rf static/bundle.js && npm run browserify",
-    "watch": "npm run test && watchify src/index.js -o static/bundle.js",
-    "browserify": "NODE_ENV=production browserify src/index.js | uglifyjs -c -m > static/bundle.js",
+    "watch": "npm run test && watchify -t brfs src/index.js -o static/bundle.js",
+    "browserify": "NODE_ENV=production browserify -t brfs src/index.js | uglifyjs -c -m > static/bundle.js",
     "test": "standard"
   }
 }
