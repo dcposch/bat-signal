@@ -1,0 +1,69 @@
+{
+  "name": "batsignal",
+  "description": "Twit Chat",
+  "version": "0.0.0",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "http://feross.org"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "bubleify",
+        {
+          "jsx": "h"
+        }
+      ]
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/dcposch/bat-signal/issues"
+  },
+  "dependencies": {
+    "compression": "^1.0.9",
+    "connect-sqlite3": "^0.9.8",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.2.0",
+    "downgrade": "^1.1.1",
+    "express": "^4.8.5",
+    "express-session": "^1.14.2",
+    "lru": "^3.1.0",
+    "mustache": "^2.3.0",
+    "simple-websocket": "^4.1.0",
+    "twit": "^2.2.5",
+    "unlimited": "^1.2.0",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^14.0.0",
+    "bubleify": "^0.6.0",
+    "classnames": "^2.2.5",
+    "dependency-check": "^2.6.0",
+    "nodemon": "^1.2.1",
+    "preact": "^6.4.0",
+    "simple-peer": "^6.0.7",
+    "standard": "*",
+    "tachyons": "^4.5.5",
+    "uglify-js": "^2.7.4",
+    "watchify": "^3.7.0"
+  },
+  "homepage": "https://batsign.al",
+  "license": "-",
+  "main": "server/index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dcposch/bat-signal.git"
+  },
+  "scripts": {
+    "build": "npm run build-css && npm run build-js",
+    "build-js": "browserify client | uglifyjs -c warnings=false -m > static/bundle.js",
+    "size": "npm run build-js && cat static/bundle.js | gzip | wc -c",
+    "start": "node server",
+    "test": "standard && dependency-check . && dependency-check . --unused --no-dev",
+    "watch": "npm run watch-js & npm run watch-server",
+    "watch-js": "watchify client -o static/bundle.js -dv",
+    "watch-server": "DEBUG=bat-signal* nodemon server -e js,pug,css -i static/"
+  }
+}
