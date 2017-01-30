@@ -20,6 +20,8 @@ then, in another tab:
 npm start
 ```
 
+then, open `http://localhost:7000/`
+
 ## deployment
 
 ```

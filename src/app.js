@@ -1,11 +1,15 @@
-const ERR_NONE = 0
-const ERR_UNSUPPORTED_BROWSER = 1
-const ERR_NOTIFICATIONS_DENIED = 2
-const ERR_PUSH_SUBSCRIPTION_FAILED = 3
+var ERR_NONE = 0
+var ERR_UNSUPPORTED_BROWSER = 1
+var ERR_NOTIFICATIONS_DENIED = 2
+var ERR_PUSH_SUBSCRIPTION_FAILED = 3
 
-const PUSH_UNKNOWN = 0
-const PUSH_UNSUBSCRIBED = 1
-const PUSH_SUBSCRIBED = 2
+var PUSH_UNKNOWN = 0
+var PUSH_UNSUBSCRIBED = 1
+var PUSH_SUBSCRIBED = 2
+
+// Browserify brfs turns this into a constant at compile time
+var fs = require('fs')
+var VAPID_PUBLIC_KEY = fs.readFileSync('public-key.dat')
 
 // Keep all state in one place.
 var state = module.exports = {
@@ -69,11 +73,9 @@ function handleWorkerReady () {
 
   registration.pushManager.getSubscription()
     .then(function (subscription) {
-      state.isPushSubscribed = subscription ? PUSH_SUBSCRIBED : PUSH_UNSUBSCRIBED
       state.pushSubscription = subscription
-      if (!subscription) return
-
-      console.log('Got existing push subscription: ' + subscription.toJSON())
+      state.isPushSubscribed = subscription ? PUSH_SUBSCRIBED : PUSH_UNSUBSCRIBED
+      updateUI()
     })
 
   // Create a message channel to communicate with the service worker
@@ -85,9 +87,10 @@ function handleWorkerReady () {
   state.worker.postMessage('hello', [channel.port2])
 }
 
-function subscribe () {
+// Subscribe to push notifications. Calls cb(err || null) when done.
+function subscribe (cb) {
   state.workerReg.pushManager
-    .subscribe({userVisibleOnly: true})
+    .subscribe({userVisibleOnly: true, applicationServerKey: VAPID_PUBLIC_KEY})
     .then(function (subscription) {
       state.pushSubscription = subscription
       state.isPushSubscribed = PUSH_SUBSCRIBED
@@ -95,6 +98,8 @@ function subscribe () {
 
       // Tell the app server we have a new subscriber
       postSubscribe('subscribe', subscription)
+
+      cb(null)
     })
     .catch(function (e) {
       if (window.Notification.permission === 'denied') {
@@ -103,7 +108,57 @@ function subscribe () {
         console.error(e)
         state.error = ERR_PUSH_SUBSCRIPTION_FAILED
       }
+      cb(e)
     })
+}
+
+// Unsubscribe from push notifications. Calls cb(err || null) when done.
+function unsubscribe (cb) {
+  postSubscribe('unsubscribe', state.pushSubscription)
+  state.pushSubscription
+    .unsubscribe()
+    .then(function () {
+      state.pushSubscription = null
+      state.isPushSubscribed = PUSH_UNSUBSCRIBED
+      updateUI()
+
+      cb(null)
+    })
+    .catch(function (e) {
+      console.error('Unsubscribe failed', e)
+      cb(e)
+    })
+}
+
+// Let the application server know if we're subscribing or unsubscribing.
+function postSubscribe (type, subscription) {
+  console.log('Notifying application server: ' + type)
+  var message = {
+    type: type,
+    subscription: subscription.toJSON()
+  }
+
+  var request = new window.XMLHttpRequest()
+  request.open('POST', document.location.origin)
+  request.setRequestHeader('Content-Type', 'application/json')
+  request.send(JSON.stringify(message))
+}
+
+// Poor man's React: avoid the dependencies, avoid the build complexity, but still keep
+// all the UI code in one place. Make the UI a function of a global state object.
+function updateUI () {
+  document.querySelector('#service-worker-status').innerText = state.workerState
+
+  var button = document.querySelector('#toggle-subscribe')
+  button.disabled = state.workerState !== 'activated'
+
+  if (state.error === ERR_UNSUPPORTED_BROWSER) show('#error-unsupported-browser')
+  else if (state.error === ERR_NOTIFICATIONS_DENIED) show('#error-notifications-denied')
+  else if (state.error === ERR_PUSH_SUBSCRIPTION_FAILED) show('#error-push-subscription-failed')
+  else if (state.error > 0) throw new Error('unsupported error ' + state.error)
+
+  var buttonText = state.isPushSubscribed === PUSH_SUBSCRIBED ? 'unsubscribe' : 'subscribe'
+  document.querySelector('#toggle-subscribe').innerText = buttonText
 }
 
 function handleUIEvents () {
@@ -116,40 +171,6 @@ function handleUIEvents () {
   function reenable () {
     button.disabled = false
   }
-}
-
-function unsubscribe () {
-  postSubscribe('unsubscribe', state.pushSubscription)
-  state.workerReg.pushManager
-    .unsubscribe()
-    .then(function () {
-      state.pushSubscription = null
-      state.isPushSubscribed = PUSH_UNSUBSCRIBED
-    })
-}
-
-function postSubscribe (statusType, subscription) {
-  console.log('POSTing ' + statusType + ': ' + subscription)
-
-  var request = new window.XMLHttpRequest()
-  request.open('POST', document.location.origin)
-  request.setRequestHeader('Content-Type', 'application/json')
-  request.send(subscription.toJSON())
-}
-
-function updateUI () {
-  document.querySelector('#service-worker-status').innerText = state.workerState
-
-  var button = document.querySelector('#toggle-subscribe')
-  button.disabled = state.workerState !== 'activated'
-
-  if (state.error === ERR_UNSUPPORTED_BROWSER) show('#error-unsupported-browser')
-  else if (state.error === ERR_NOTIFICATIONS_DENIED) show('#error-notifications-denied')
-  else if (state.error === ERR_PUSH_SUBSCRIPTION_FAILED) show('#error-push-subscription-failed')
-  else if (state.error > 0) throw new Error('unsupported error ' + state.error)
-
-  var buttonText = state.isPushSubscribed ? 'unsubscribe' : 'subscribe'
-  document.querySelector('#toggle-subscribe').innerText = buttonText
 }
 
 function show (selector) {
