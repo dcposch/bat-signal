@@ -1,4 +1,10 @@
-# bat signal
+<h1 align="center">
+  <img src="https://cloud.githubusercontent.com/assets/169280/22394697/9da8d3e2-e4db-11e6-8648-4fffd389a5ac.gif" alt="batsignal">
+  <br>
+  bat signal
+  <br>
+  <br>
+</h1>
 
 **summon your heros. save the city.**
 
@@ -19,8 +25,6 @@ then, in another tab:
 ```
 npm start
 ```
-
-then, open `http://localhost:7000/`
 
 ## deployment
 
