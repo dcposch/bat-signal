@@ -10,25 +10,23 @@ exports.isProd = isProd
 /**
  * Server listening port
  */
-exports.port = isProd
-  ? 7500
-  : 4000
+exports.port = 6660
 
 /**
  * Name of the site
  */
-exports.name = 'Bat Signal'
+exports.name = 'batsignal'
 
 /**
  * Description of the site
  */
-exports.description = 'Summon your heros. Save the city.'
+exports.description = 'summon your heros. save the city.'
 
 /**
  * Website hostname
  */
 exports.host = isProd
-  ? 'www.batsign.al'
+  ? 'batsign.al'
   : 'localhost:' + exports.port
 
 /**
