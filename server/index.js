@@ -1,5 +1,5 @@
 const ConnectSQLite = require('connect-sqlite3')
-const debug = require('debug')('bat-signal')
+const debug = require('debug')('batsignal')
 const http = require('http')
 const path = require('path')
 const session = require('express-session')

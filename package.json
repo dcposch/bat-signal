@@ -20,17 +20,18 @@
   "dependencies": {
     "body-parser": "^1.16.0",
     "brfs": "^1.4.3",
+    "compression": "^1.0.9",
     "connect-sqlite3": "^0.9.8",
     "cookie-parser": "^1.4.3",
     "debug": "^2.2.0",
     "express": "^4.8.5",
+    "express-session": "^1.14.2",
+    "login-with-twitter": "^1.0.0",
+    "lru": "^3.1.0",
     "serve-static": "^1.11.2",
+    "simple-websocket": "^4.1.0",
     "urlsafe-base64": "^1.0.0",
     "web-push": "^3.2.1",
-    "compression": "^1.0.9",
-    "express-session": "^1.14.2",
-    "lru": "^3.1.0",
-    "simple-websocket": "^4.1.0",
     "ws": "^1.1.1"
   },
   "devDependencies": {
