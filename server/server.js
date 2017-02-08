@@ -1,10 +1,10 @@
-var express = require('express')
-var http = require('http')
-var serveStatic = require('serve-static')
-var path = require('path')
 var webPush = require('web-push')
 var fs = require('fs')
 var bodyParser = require('body-parser')
+
+// Lets users subscribe to push notifications
+// Sends demo push notifications
+module.exports = {init}
 
 var subscribers = []
 
@@ -15,14 +15,12 @@ try {
   console.log('warning: couldn\'t read keys.json - run ./scripts/generate-keys.js')
 }
 
-var app = express()
+function init (app) {
+  app.use(bodyParser.json())
+  app.post('/', handlePost)
+}
 
-app.use(serveStatic(path.join(__dirname, '..', 'static'), {'index': ['index.html']}))
-app.use(serveStatic(path.join(__dirname, '..', 'build'), {'index': false}))
-
-app.use(bodyParser.json())
-
-app.post('/', function (request, response) {
+function handlePost (request, response) {
   var message = request.body
   console.log('Got a message: ' + message.type)
   var sub = message.subscription
@@ -41,7 +39,7 @@ app.post('/', function (request, response) {
     console.error('dropping unknown message type ' + message.type)
   }
   response.end()
-})
+}
 
 function notifyAll () {
   var message = {
@@ -72,8 +70,3 @@ function notify (subscriber, message) {
   }
   webPush.sendNotification(subscriber, JSON.stringify(message), options)
 }
-
-var server = http.createServer(app)
-server.listen(7000, function () {
-  console.log('listening on ' + JSON.stringify(server.address()))
-})

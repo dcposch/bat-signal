@@ -9,13 +9,15 @@ const app = require('./app')
 const config = require('../config')
 const socket = require('./socket')
 
-const server = http.createServer()
-
+// Connect to SQLite. Create DB stores.
 const dbDir = path.join(config.root, 'db')
 mkdirp.sync(dbDir)
 const SQLiteStore = ConnectSQLite(session)
 const sessionStore = new SQLiteStore({ dir: dbDir })
 
+// Create a local HTTP server. Serve static files and APIs.
+// Expects a seperate reverse proxy listen publically, terminate SSL.
+const server = http.createServer()
 app.init(server, sessionStore)
 socket.init(server, sessionStore)
 

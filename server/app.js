@@ -12,6 +12,7 @@ const url = require('url')
 
 const config = require('../config')
 const secret = require('../secret')
+const pushServer = require('./server')
 
 const loginTwitter = new LoginTwitter(Object.assign({
   callbackUrl: `${config.httpOrigin}/auth/twitter/callback`
@@ -125,6 +126,9 @@ function init (server, sessionStore) {
     res.locals.state.error = `404: ${http.STATUS_CODES[404]}`
     res.end(404)
   })
+
+  // TODO
+  pushServer.init(app)
 
   app.use((err, req, res, next) => {
     console.error(err.stack || err.message)

@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "body-parser": "^1.16.0",
-    "brfs": "^1.4.3",
     "compression": "^1.0.9",
     "connect-sqlite3": "^0.9.8",
     "cookie-parser": "^1.4.3",
@@ -27,11 +26,7 @@
     "express": "^4.8.5",
     "express-session": "^1.14.2",
     "login-with-twitter": "^1.0.0",
-    "lru": "^3.1.0",
     "mkdirp": "^0.5.1",
-    "serve-static": "^1.11.2",
-    "simple-websocket": "^4.1.0",
-    "urlsafe-base64": "^1.0.0",
     "web-push": "^3.2.1",
     "ws": "^1.1.1"
   },
