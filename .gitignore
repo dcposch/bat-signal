@@ -4,3 +4,6 @@ secret/*
 !secret/index-sample.js
 
 static/bundle.js
+
+keys.json
+public-key.dat
