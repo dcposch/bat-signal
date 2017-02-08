@@ -4,7 +4,6 @@ module.exports = {
 
 const compress = require('compression')
 const express = require('express')
-const fs = require('fs')
 const http = require('http')
 const LoginTwitter = require('login-with-twitter')
 const path = require('path')
