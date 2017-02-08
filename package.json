@@ -28,6 +28,7 @@
     "express-session": "^1.14.2",
     "login-with-twitter": "^1.0.0",
     "lru": "^3.1.0",
+    "mkdirp": "^0.5.1",
     "serve-static": "^1.11.2",
     "simple-websocket": "^4.1.0",
     "urlsafe-base64": "^1.0.0",
