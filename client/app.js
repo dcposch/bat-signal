@@ -3,9 +3,6 @@ const { h, render } = require('preact')
 
 const App = require('../components/App')
 
-// TODO
-render(<App state={{}} />, document.querySelector('#app'))
-
 var ERR_NONE = 0
 var ERR_UNSUPPORTED_BROWSER = 1
 var ERR_NOTIFICATIONS_DENIED = 2
@@ -27,6 +24,9 @@ var state = module.exports = {
   workerReg: null,
   worker: null
 }
+
+// TODO
+render(<App state={state} />, document.querySelector('#app'))
 
 main()
 

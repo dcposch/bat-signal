@@ -31,9 +31,8 @@
     "ws": "^1.1.1"
   },
   "devDependencies": {
+    "brfs": "^1.4.3",
     "browserify": "^14.0.0",
-    "uglify-js": "^2.7.5",
-    "watchify": "^3.8.0",
     "bubleify": "^0.6.0",
     "classnames": "^2.2.5",
     "dependency-check": "^2.6.0",
@@ -41,7 +40,9 @@
     "preact": "^6.4.0",
     "simple-peer": "^6.0.7",
     "standard": "^8.6.0",
-    "tachyons": "^4.5.5"
+    "tachyons": "^4.5.5",
+    "uglify-js": "^2.7.5",
+    "watchify": "^3.8.0"
   },
   "private": true,
   "browserify": {
@@ -51,7 +52,8 @@
         {
           "jsx": "h"
         }
-      ]
+      ],
+      "brfs"
     ]
   }
 }

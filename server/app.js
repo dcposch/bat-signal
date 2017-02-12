@@ -124,7 +124,7 @@ function init (server, sessionStore) {
 
   app.get('*', (req, res) => {
     res.locals.state.error = `404: ${http.STATUS_CODES[404]}`
-    res.end(404)
+    res.status(404).end()
   })
 
   // TODO
@@ -134,7 +134,7 @@ function init (server, sessionStore) {
     console.error(err.stack || err.message)
     const code = err.status || 500
     res.locals.state.error = `${code}: ${http.STATUS_CODES[code]} (${err.message})`
-    res.end(code)
+    res.status(code).end()
   })
 
   server.on('request', app)
