@@ -14,8 +14,9 @@ const config = require('../config')
 const secret = require('../secret')
 const pushServer = require('./server')
 
+const twitterCallbackUrl = `${config.httpOrigin}/auth/twitter/callback`
 const loginTwitter = new LoginTwitter(Object.assign({
-  callbackUrl: `${config.httpOrigin}/auth/twitter/callback`
+  callbackUrl: twitterCallbackUrl
 }, secret.twitter))
 
 function init (server, sessionStore) {
@@ -53,9 +54,6 @@ function init (server, sessionStore) {
     next()
   })
 
-  app.use(express.static(path.join(config.root, 'static')))
-  app.use(express.static(path.dirname(require.resolve('tachyons'))))
-
   app.use(session({
     store: sessionStore,
     secret: secret.cookie,
@@ -68,10 +66,13 @@ function init (server, sessionStore) {
   }))
 
   app.use((req, res, next) => {
-    res.locals.state = {}
-    res.locals.state.userName = req.session.user && req.session.user.userName
+    const userName = req.session.user ? req.session.user.userName : ''
+    res.cookie('userName', userName)
     next()
   })
+
+  app.use(express.static(path.join(config.root, 'static')))
+  app.use(express.static(path.dirname(require.resolve('tachyons'))))
 
   app.get('/auth/twitter', (req, res, next) => {
     if (req.session.user) {
@@ -96,7 +97,8 @@ function init (server, sessionStore) {
       return res.redirect('/')
     }
 
-    loginTwitter.callback(req.query, req.session.tokenSecret, (err, user) => {
+    const {oauth_token, oauth_verifier} = req.query
+    loginTwitter.callback({oauth_token, oauth_verifier}, req.session.tokenSecret, (err, user) => {
       if (err) return next(err)
 
       // Delete the saved token secret

@@ -22,7 +22,8 @@ var state = module.exports = {
   isPushSubscribed: PUSH_UNKNOWN,
   workerState: 'not installed',
   workerReg: null,
-  worker: null
+  worker: null,
+  userName: getCookie()['userName']
 }
 
 // TODO
@@ -183,4 +184,18 @@ function handleUIEvents () {
 
 function show (selector) {
   document.querySelector(selector).style.display = 'block'
+}
+
+function getCookie () {
+  const values = {}
+  window.document.cookie
+    .split(';')
+    .forEach(function (part) {
+      const ix = part.indexOf('=')
+      if (ix < 0) return
+      const key = part.substring(0, ix).trim()
+      const value = part.substring(ix + 1).trim()
+      values[key] = value
+    })
+  return values
 }

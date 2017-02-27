@@ -8,7 +8,7 @@ class App extends Component {
   render (props) {
     const state = props.state
     return (
-      <div id='app' class='near-black f5'>
+      <div>
         <Header userName={state.userName} />
         <Main state={state} />
         <Footer />

@@ -4,7 +4,7 @@ const { Component, h } = require('preact')
 class Sheet extends Component {
   render (props) {
     return (
-      <div class='mh2 ph4 pv4 br3 bg-white'>
+      <div className='measure lh-copy'>
         {props.children}
       </div>
     )

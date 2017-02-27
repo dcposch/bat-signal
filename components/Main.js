@@ -111,7 +111,7 @@ class Main extends Component {
       )
     }
 
-    return <main id='main' class='mw8 mt3 ma-100'>{$content}</main>
+    return <main id='main' className='border-box w-100 mw8 pa2 center'>{$content}</main>
   }
 }
 
