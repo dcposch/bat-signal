@@ -13,13 +13,13 @@ class Main extends Component {
       $content = (
         <Sheet>
           <h1>{error}</h1>
-          <h2>Sorry about that.</h2>
+          <h2>sorry about that.</h2>
         </Sheet>
       )
     } else if (userName) {
       $content = (
         <Sheet>
-          <h1>Logged in as {userName}</h1>
+          <h1>logged in as {userName}</h1>
         </Sheet>
       )
     } else {
@@ -47,7 +47,7 @@ class Main extends Component {
           </p>
 
           <p>
-            clicking Subscribe will ask to show notifications. click allow. 10 seconds later, even
+            clicking subscribe will ask to show notifications. click allow. 10 seconds later, even
             if you've closed the tab, everyone who is subscribed will get a demo push notification.
           </p>
 
@@ -65,7 +65,7 @@ class Main extends Component {
 
           <ul>
             <li>
-              <p><strong>apply sparingly</strong>. nobody likes spam.</p>
+              <p><strong>use it wisely</strong>. nobody likes spam.</p>
             </li>
             <li>
               <p>
@@ -105,7 +105,7 @@ class Main extends Component {
             href='/auth/twitter'
             class='mb2'
           >
-            Login with Twitter
+            login with twitter
           </Button>
         </Sheet>
       )

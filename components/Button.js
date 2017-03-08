@@ -10,7 +10,6 @@ const c = require('classnames')
  * Pill Button
  * http://tachyons.io/components/buttons/pill/index.html
  */
-
 class Button extends Component {
   static get defaultProps () {
     return {

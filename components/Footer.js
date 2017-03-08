@@ -8,7 +8,7 @@ class Footer extends Component {
     return (
       <footer id='footer' class='f6 mw8 ph3 mt3 ma-100 center'>
         <p>
-          Code available on <Link href='https://github.com/dcposch/bat-signal'>GitHub</Link>.
+          code available on <Link href='https://github.com/dcposch/bat-signal'>github</Link>.
         </p>
       </footer>
     )
