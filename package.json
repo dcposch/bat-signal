@@ -11,7 +11,7 @@
     "build": "npm run build-css && npm run build-js",
     "build-js": "NODE_ENV=production browserify client | uglifyjs -c warnings=false -m > static/bundle.js",
     "size": "npm run build-js && cat static/bundle.js | gzip | wc -c",
-    "start": "node server",
+    "start": "DEBUG=batsignal node server",
     "test": "standard && dependency-check . && dependency-check . --unused --no-dev",
     "watch": "npm run watch-js & npm run watch-server",
     "watch-js": "watchify client -o static/bundle.js -dv",

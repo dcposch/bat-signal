@@ -11,6 +11,7 @@ const socket = require('./socket')
 
 // Connect to SQLite. Create DB stores.
 const dbDir = path.join(config.root, 'db')
+debug('Connecting to SQLite: %s', dbDir)
 mkdirp.sync(dbDir)
 const SQLiteStore = ConnectSQLite(session)
 const sessionStore = new SQLiteStore({ dir: dbDir })
@@ -25,5 +26,5 @@ server.listen(config.port, onListening)
 
 function onListening (err) {
   if (err) throw err
-  debug('Listening on port %s', server.address().port)
+  debug('Serving HTTP on port %s', server.address().port)
 }
