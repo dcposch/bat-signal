@@ -124,6 +124,29 @@ function init (server, sessionStore) {
     next(new Error('Manually visited /500'))
   })
 
+  app.get('/api/signals', (req, res) => {
+    const {user} = req.session
+    if (!user) return res.status(403).end()
+    return res.json([
+      {
+        id: 1234,
+        name: 'dc\'s first signal',
+        stats: {
+          subscribers: 0,
+          alerts: 0
+        }
+      },
+      {
+        id: 1234,
+        name: 'yimby sf',
+        stats: {
+          subscribers: 123,
+          alerts: 77
+        }
+      }
+    ])
+  })
+
   app.get('*', (req, res) => {
     res.locals.state.error = `404: ${http.STATUS_CODES[404]}`
     res.status(404).end()
