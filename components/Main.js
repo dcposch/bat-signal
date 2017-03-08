@@ -3,6 +3,7 @@ const { Component, h } = require('preact')
 
 const Button = require('./Button')
 const Sheet = require('./Sheet')
+const OrgPage = require('./OrgPage')
 
 class Main extends Component {
   render (props) {
@@ -18,9 +19,7 @@ class Main extends Component {
       )
     } else if (userName) {
       $content = (
-        <Sheet>
-          <h1>logged in as {userName}</h1>
-        </Sheet>
+        <OrgPage userName={userName} />
       )
     } else {
       $content = (
