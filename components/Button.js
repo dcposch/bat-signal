@@ -37,7 +37,7 @@ class Button extends Component {
 
     return (
       <a
-        class={c(cls, props.class)}
+        className={c(cls, props.class)}
         href={props.href}
         onClick={props.onClick}
       >

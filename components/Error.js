@@ -11,7 +11,7 @@ class Error extends Component {
     else if (errorID === 'error-push-subscribe-failed') $err = this.renderPushSubscribeFailed()
     else throw new Error('Unsupported errorID ' + errorID)
 
-    return (<div class='error'>{$err}</div>)
+    return (<div className='error'>{$err}</div>)
   }
 
   renderErrorUnsupportedBrowser () {

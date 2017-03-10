@@ -102,7 +102,7 @@ class Main extends Component {
             fill
             size='l'
             href='/auth/twitter'
-            class='mb2'
+            className='mb2'
           >
             login with twitter
           </Button>

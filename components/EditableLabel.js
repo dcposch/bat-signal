@@ -19,14 +19,12 @@ class EditableLabel extends Component {
     }
   }
 
-  componentWillMount () {
-    console.log('DBG mount')
+  componentDidMount () {
     window.addEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillUnmount () {
-    console.log('DBG unmount')
-    window.removeEventListenere('keydown', this.handleKeyDown)
+    window.removeEventListener('keydown', this.handleKeyDown)
   }
 
   render () {
@@ -37,19 +35,21 @@ class EditableLabel extends Component {
   renderLabel () {
     const {text} = this.props
     return (
-      <label className='f2'>
-        {text}
+      <div className='h3 cf'>
+        <label className='f2'>
+          {text}
+        </label>
         <a href='#' className='fr f4 ph3 pv1 link ba accent' onClick={this.handleEdit}>
           edit
         </a>
-      </label>
+      </div>
     )
   }
 
   renderInput () {
     const {text} = this.props
     return (
-      <div>
+      <div className='h3 cf'>
         <input
           className='w-two-thirds lh-copy f4 ph3 pv1 ba'
           value={text}

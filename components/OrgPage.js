@@ -61,7 +61,7 @@ class OrgPage extends Component {
     }
 
     return (
-      <div class='ml4'>
+      <div className='ml4'>
         <EditableLabel
           text={sig.name}
           onSave={(name) => {
@@ -69,6 +69,9 @@ class OrgPage extends Component {
             this.setState({selectedSignal: sig})
           }}
         />
+
+        <img src='img/batsignal-sfyimby.gif' className='w-100' />
+
       </div>
     )
   }

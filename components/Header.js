@@ -28,10 +28,10 @@ class Header extends Component {
     }
 
     return (
-      <header id='header' class='top-0 w-100 bb b--gray'>
-        <nav class='border-box w-100 mw8 center pa2'>
-          <a class='link near-black hover-gray f3' href='/'>{config.name}</a>
-          <div class='fr mt2'>
+      <header id='header' className='top-0 w-100 bb b--gray'>
+        <nav className='border-box w-100 mw8 center pa2'>
+          <a className='link near-black hover-gray f3' href='/'>{config.name}</a>
+          <div className='fr mt2'>
             {$login}
           </div>
         </nav>
