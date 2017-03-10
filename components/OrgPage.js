@@ -1,6 +1,7 @@
 /** @jsx h */
 const { Component, h } = require('preact')
 const http = require('../client/http')
+const EditableLabel = require('./EditableLabel')
 
 class OrgPage extends Component {
   constructor (props) {
@@ -36,9 +37,13 @@ class OrgPage extends Component {
     const {signals, selectedSignal} = this.state
 
     return signals.map((signal) => (
-      <div className='h3 pv2 bb b--light-gray' style={{
-        borderRight: signal === selectedSignal ? '0.5rem solid #514' : ''
-      }}>
+      <div
+        className='h3 pv2 bb b--light-gray pointer'
+        onClick={() => this.setState({selectedSignal: signal})}
+        style={{
+          borderRight: signal === selectedSignal ? '0.5rem solid #514' : ''
+        }}
+      >
         <div className='f4'>{signal.name}</div>
         <div className='dib f6 w4'>{signal.stats.subscribers} subscribers</div>
         <div className='dib f6'>{signal.stats.alerts} alerts</div>
@@ -56,8 +61,14 @@ class OrgPage extends Component {
     }
 
     return (
-      <div>
-        <div className='f3 ml4'>{sig.name}</div>
+      <div class='ml4'>
+        <EditableLabel
+          text={sig.name}
+          onSave={(name) => {
+            sig.name = name
+            this.setState({selectedSignal: sig})
+          }}
+        />
       </div>
     )
   }
