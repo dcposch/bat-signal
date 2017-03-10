@@ -72,6 +72,26 @@ class OrgPage extends Component {
 
         <img src='img/batsignal-sfyimby.gif' className='w-100' />
 
+        <div className='f4 mt3 mb2'>
+          {sig.stats.subscribers} subscribers. invite more!
+        </div>
+        <div className='f6'>
+          just send them this link. you can try it yourself:
+          <a className='link accent' href={'/signal/1'}>https://batsign.al/signal/1</a>
+        </div>
+
+        <div className='f4 mt3 mb2'>
+          send the signal
+        </div>
+        <div>
+          <textarea className='w-100 ba bg-transparent accent' rows='5' />
+        </div>
+        <a href='#'
+          className='f4 ph3 pv1 link ba accent'
+          onClick={() => console.log('TODO send')}
+        >
+          light it up
+        </a>
       </div>
     )
   }
