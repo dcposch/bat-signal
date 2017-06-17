@@ -29,13 +29,6 @@ function init (server, sessionStore) {
 
   // Add headers
   app.use((req, res, next) => {
-    const extname = path.extname(url.parse(req.url).pathname)
-
-    // Add cross-domain header for fonts, required by spec, Firefox, and IE.
-    if (['.eot', '.ttf', '.otf', '.woff', '.woff2'].indexOf(extname) >= 0) {
-      res.header('Access-Control-Allow-Origin', '*')
-    }
-
     // Prevents IE and Chrome from MIME-sniffing a response to reduce exposure to
     // drive-by download attacks when serving user uploaded content.
     res.header('X-Content-Type-Options', 'nosniff')
@@ -47,9 +40,6 @@ function init (server, sessionStore) {
     // enabled by default anyway, so role of this headers is to re-enable for this
     // particular website if it was disabled by the user.
     res.header('X-XSS-Protection', '1; mode=block')
-
-    // Force IE to use latest rendering engine or Chrome Frame
-    res.header('X-UA-Compatible', 'IE=Edge,chrome=1')
 
     next()
   })
